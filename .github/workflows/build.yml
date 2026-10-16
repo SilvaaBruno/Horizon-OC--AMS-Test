@@ -54,8 +54,12 @@ jobs:
           echo $SHORT_SHA > dist/.commit
           echo $GITHUB_SHA >> dist/.commit
 
+      # AMS 1.12.x calls pgl* functions that are not in libnx v4.12.0 (added to master on 2026-09-15),
+      # so build against a master commit instead of the release tag.
       - name: Clone Libnx
-        run: git clone https://github.com/switchbrew/libnx.git --depth=1 --single-branch -b v4.12.0
+        run: |
+          git clone --single-branch -b master https://github.com/switchbrew/libnx.git
+          git -C libnx checkout 7a4f81d
 
       - name: Clone Atmosphere
         run: git clone --depth=1 --single-branch https://github.com/Atmosphere-NX/Atmosphere.git atmosphere -b $(cat ams_ver.txt)
