@@ -177,11 +177,20 @@ jobs:
              ccache --show-config
 
       # -------------------------------------------------
-      # Upload ZIP artifact
+      # Assemble everything (kip + hoc-clk sysmodule/overlay) and upload
       # -------------------------------------------------
+      - name: Assemble dist
+        run: |
+          mkdir -p out
+          cp -r dist/. out/
+          cp -r Source/hoc-clk/dist/. out/
+          find out -type f | sort
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v6
         with:
           name: horizon-oc-zeus-dist
-          path: $DIST_DIR
+          path: out
+          include-hidden-files: true
+          if-no-files-found: error
           compression-level: 6
