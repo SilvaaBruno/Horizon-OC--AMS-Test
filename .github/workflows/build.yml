@@ -177,6 +177,7 @@ jobs:
           export CXX="ccache aarch64-none-elf-g++"
           make -j$(($(nproc) * 4)) CXX="ccache aarch64-none-elf-g++" CC="ccache aarch64-none-elf-gcc"
           hactool -t kip1 out/nintendo_nx_arm64_armv8a/release/loader.kip --uncompress=hoc.kip
+          mkdir -p ../../../dist/atmosphere/kips
           cp hoc.kip ../../../dist/atmosphere/kips/hoc.kip
           
       - name: ccache stat
